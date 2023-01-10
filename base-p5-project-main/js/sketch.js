@@ -7,27 +7,28 @@ let amplitude;
 let frequency;
 let maxAngle;
 function setup() {
-    amplitude = windowHeight /8;
-    frequency = windowWidth /8;
+    amplitude = windowHeight /3;
+    frequency = windowWidth /3;
     maxAngle = (windowWidth/frequency) * TWO_PI;
     createCanvas(windowWidth, windowHeight);
 }
 function draw() {
     background(0);
     noStroke();
+    let length = 25;
     while(theta < maxAngle + offset){
-        // sine wave 2
-        y = sin(theta - 0.2) * amplitude;
-        fill(100, 0, 0);
-        ellipse(x, y + height*0.5, 16);
-        // sine wave 1
-        y = sin(theta) * amplitude;
-        fill(255, 0, 0);
-        ellipse(x, y + height*0.5, 16);
-        // cosine wave
-        y = cos(theta) * amplitude;
-        fill(212, 255, 0);
-        ellipse(x, y + height*0.5, 16);
+        // amplitude = sin(theta - offset) * (windowHeight/2);
+        amplitude = ((theta - offset)/maxAngle) * (windowHeight/2);
+        for (i = length; i > 0; i--){
+            y = sin(theta - (i * 0.05)) * amplitude;
+            fill(255 - (255/length * i), 80, 154);
+            square(x, y + height / 2, 16)
+        }
+        for (i = length; i > 0; i--){
+            y = cos(theta - (i * 0.05)) * amplitude;
+            fill(255 - (255/length * i), 80, 80);
+            square(x, y + height / 2, 16)
+        }
         theta += 0.2;
         x = ((theta - offset)/maxAngle) * windowWidth;
     }
